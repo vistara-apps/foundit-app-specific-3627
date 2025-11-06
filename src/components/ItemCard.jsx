@@ -22,15 +22,16 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
   const isExpiringSoon = daysLeft <= 30
 
   return (
-    <div className="bg-surface rounded-lg border border-border shadow-card hover:shadow-card-hover transition-all duration-150 overflow-hidden group">
+    <div className="bg-surface rounded-xl border border-border shadow-card hover:shadow-card-hover transition-all duration-200 overflow-hidden group cursor-pointer transform hover:-translate-y-1">
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-bg">
         <img
           src={item.thumbnailUrl || item.imageUrl}
           alt={item.description}
-          className={`w-full h-full object-cover transition-transform duration-150 group-hover:scale-105 ${
-            item.status === 'claimed' ? 'grayscale' : ''
+          className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 ${
+            item.status === 'claimed' ? 'grayscale opacity-75' : ''
           }`}
+          loading="lazy"
         />
         
         {/* Status Badge */}
@@ -40,33 +41,34 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
 
         {/* Claimed Overlay */}
         {item.status === 'claimed' && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-success text-white px-3 py-1 rounded-full text-sm font-medium">
-              ✓ Claimed
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center backdrop-blur-sm">
+            <div className="bg-success text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
+              <span className="text-lg">✓</span>
+              Claimed
             </div>
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className="p-5">
         {/* Category and Tags */}
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-medium text-primary bg-primary bg-opacity-10 px-2 py-1 rounded-full">
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-xs font-semibold text-primary bg-primary bg-opacity-10 px-3 py-1.5 rounded-full">
             {item.category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
           </span>
           {isExpiringSoon && item.status === 'available' && (
-            <div className="flex items-center text-xs text-warning">
+            <div className="flex items-center text-xs font-medium text-warning bg-warning bg-opacity-10 px-2 py-1 rounded-md">
               <Clock className="h-3 w-3 mr-1" />
-              {daysLeft}d left
+              {daysLeft}d
             </div>
           )}
         </div>
 
         {/* Description */}
-        <p className="text-sm text-text-primary font-medium mb-2 line-clamp-2">
+        <h3 className="text-base text-text-primary font-semibold mb-3 line-clamp-2 min-h-[3rem] leading-tight">
           {item.description}
-        </p>
+        </h3>
 
         {/* Tags */}
         {item.tags && item.tags.length > 0 && (
@@ -95,11 +97,12 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
         </div>
 
         {/* Actions */}
-        <div className="space-y-2">
+        <div className="space-y-2 mt-4">
           {item.status === 'available' && !showAdminActions && (
             <button
               onClick={onClaimClick}
-              className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover focus-ring transition-colors duration-150 font-medium"
+              className="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-2.5 px-4 rounded-lg hover:shadow-lg focus-ring transition-all duration-200 font-semibold transform hover:scale-[1.02] active:scale-[0.98]"
+              aria-label={`Claim ${item.description}`}
             >
               Claim This Item
             </button>
