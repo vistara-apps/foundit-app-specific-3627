@@ -73,12 +73,17 @@ const PublicBrowse = () => {
   return (
     <div className="min-h-screen bg-bg">
       {/* Header */}
-      <header className="bg-surface border-b border-border sticky top-0 z-40">
+      <header className="bg-surface border-b border-border sticky top-0 z-40 backdrop-blur-sm bg-opacity-95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
-              <h1 className="text-xl font-bold text-primary">FoundIt</h1>
-              <span className="text-sm text-text-muted hidden sm:block">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <span className="text-white text-lg font-bold">F</span>
+                </div>
+                <h1 className="text-xl sm:text-2xl font-bold text-primary">FoundIt</h1>
+              </div>
+              <span className="text-xs sm:text-sm text-text-muted hidden md:block">
                 Center Elementary School
               </span>
             </div>
@@ -100,16 +105,17 @@ const PublicBrowse = () => {
               ) : (
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="flex items-center space-x-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover focus-ring"
+                  className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover active:scale-95 focus-ring transition-all duration-200 font-medium shadow-button"
                 >
                   <User className="h-4 w-4" />
-                  <span className="hidden sm:block">Login</span>
+                  <span className="hidden sm:inline">Login</span>
                 </button>
               )}
               
               <a
                 href="#admin"
                 className="text-sm text-text-muted hover:text-primary focus-ring rounded px-2 py-1"
+                aria-label="Go to admin login"
               >
                 Admin
               </a>
@@ -134,28 +140,47 @@ const PublicBrowse = () => {
       {/* Items Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         {filteredItems.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-lg font-semibold text-text-primary mb-2">
+          <div className="text-center py-16 sm:py-20">
+            <div className="w-20 h-20 sm:w-24 sm:h-24 bg-bg rounded-full flex items-center justify-center mx-auto mb-6">
+              <div className="text-5xl sm:text-6xl">🔍</div>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold text-text-primary mb-3">
               No items found
             </h3>
-            <p className="text-text-muted">
+            <p className="text-base sm:text-lg text-text-muted max-w-md mx-auto">
               {searchTerm || selectedCategory !== 'all' 
-                ? 'Try adjusting your search or filters'
-                : 'No lost items have been uploaded yet'
-              }
+                ? 'Try adjusting your search or filters to find what you are looking for'
+                : 'No lost items have been uploaded yet. Check back soon!'}
             </p>
+            {(searchTerm || selectedCategory !== 'all') && (
+              <button
+                onClick={() => {
+                  setSearchTerm('')
+                  setSelectedCategory('all')
+                }}
+                className="mt-6 px-6 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-hover focus-ring transition-all duration-200 font-medium shadow-button"
+              >
+                Clear Filters
+              </button>
+            )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredItems.map((item) => (
-              <ItemCard
-                key={item.id}
-                item={item}
-                onClaimClick={() => handleClaimClick(item)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="mb-4 flex items-center justify-between">
+              <p className="text-sm text-text-muted">
+                Showing {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''}
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {filteredItems.map((item) => (
+                <ItemCard
+                  key={item.id}
+                  item={item}
+                  onClaimClick={() => handleClaimClick(item)}
+                />
+              ))}
+            </div>
+          </>
         )}
       </main>
 

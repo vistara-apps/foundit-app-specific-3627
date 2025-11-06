@@ -37,7 +37,7 @@ const ClaimModal = ({ item, onClose }) => {
 
   if (submitted) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
         <div className="bg-surface rounded-lg max-w-md w-full p-6 animate-slide-up">
           <div className="text-center">
             <div className="w-16 h-16 bg-success bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -59,8 +59,8 @@ const ClaimModal = ({ item, onClose }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-surface rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-slide-up">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-surface rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-slide-up shadow-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-border">
           <h2 className="text-xl font-semibold text-text-primary">
@@ -113,7 +113,8 @@ const ClaimModal = ({ item, onClose }) => {
                 value={childName}
                 onChange={(e) => setChildName(e.target.value)}
                 placeholder="Enter your child's full name"
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
+                autoComplete="name"
                 required
               />
             </div>
@@ -129,7 +130,7 @@ const ClaimModal = ({ item, onClose }) => {
                 onChange={(e) => setClaimReason(e.target.value)}
                 placeholder="Please provide details like where it was lost, unique identifiers, or distinguishing features..."
                 rows={4}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 resize-none"
                 required
               />
             </div>
@@ -160,13 +161,18 @@ const ClaimModal = ({ item, onClose }) => {
               >
                 Cancel
               </button>
-              <button
-                type="submit"
-                disabled={isSubmitting || !childName.trim() || !claimReason.trim()}
-                className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover focus-ring transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Submitting...' : 'Submit Claim'}
-              </button>
+            <button
+              type="submit"
+              disabled={isSubmitting || !childName.trim() || !claimReason.trim()}
+              className="flex-1 px-4 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-hover active:scale-95 focus-ring transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-button"
+            >
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Submitting...
+                </span>
+              ) : 'Submit Claim'}
+            </button>
             </div>
           </form>
         </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Calendar, Tag, Clock } from 'lucide-react'
 import StatusBadge from './StatusBadge'
 
-const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDelete }) => {
+const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDelete, compact = false }) => {
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -22,13 +22,14 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
   const isExpiringSoon = daysLeft <= 30
 
   return (
-    <div className="bg-surface rounded-lg border border-border shadow-card hover:shadow-card-hover transition-all duration-150 overflow-hidden group">
+    <div className="bg-surface rounded-lg border border-border shadow-card hover:shadow-card-hover transition-all duration-200 overflow-hidden group cursor-pointer">
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden bg-bg">
         <img
           src={item.thumbnailUrl || item.imageUrl}
           alt={item.description}
-          className={`w-full h-full object-cover transition-transform duration-150 group-hover:scale-105 ${
+          loading="lazy"
+          className={`w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 ${
             item.status === 'claimed' ? 'grayscale' : ''
           }`}
         />
@@ -40,16 +41,17 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
 
         {/* Claimed Overlay */}
         {item.status === 'claimed' && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-success text-white px-3 py-1 rounded-full text-sm font-medium">
-              ✓ Claimed
+          <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center backdrop-blur-sm">
+            <div className="bg-success text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
+              <span className="text-lg">✓</span>
+              <span>Claimed</span>
             </div>
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-4">
+      <div className={compact ? "p-3" : "p-4"}>
         {/* Category and Tags */}
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-medium text-primary bg-primary bg-opacity-10 px-2 py-1 rounded-full">
@@ -64,9 +66,9 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
         </div>
 
         {/* Description */}
-        <p className="text-sm text-text-primary font-medium mb-2 line-clamp-2">
+        <h3 className="text-base text-text-primary font-semibold mb-2 line-clamp-2 leading-tight">
           {item.description}
-        </p>
+        </h3>
 
         {/* Tags */}
         {item.tags && item.tags.length > 0 && (
@@ -99,7 +101,8 @@ const ItemCard = ({ item, onClaimClick, showAdminActions = false, onEdit, onDele
           {item.status === 'available' && !showAdminActions && (
             <button
               onClick={onClaimClick}
-              className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-hover focus-ring transition-colors duration-150 font-medium"
+              aria-label={`Claim ${item.description}`}
+              className="w-full bg-primary text-white py-2.5 px-4 rounded-lg hover:bg-primary-hover active:scale-95 focus-ring transition-all duration-200 font-semibold shadow-button hover:shadow-md"
             >
               Claim This Item
             </button>

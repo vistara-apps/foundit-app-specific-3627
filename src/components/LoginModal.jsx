@@ -32,8 +32,8 @@ const LoginModal = ({ onClose, onSuccess }) => {
 
   if (magicLinkSent) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-surface rounded-lg max-w-md w-full p-6 animate-slide-up">
+      <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div className="bg-surface rounded-lg max-w-md w-full p-6 animate-slide-up shadow-modal">
           <div className="text-center">
             <div className="w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4">
               <Mail className="h-8 w-8 text-primary" />
@@ -55,8 +55,8 @@ const LoginModal = ({ onClose, onSuccess }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-surface rounded-lg max-w-md w-full p-6 animate-slide-up">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 backdrop-blur-sm" onClick={onClose}>
+      <div className="bg-surface rounded-lg max-w-md w-full p-6 animate-slide-up shadow-modal" onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-text-primary">
@@ -82,7 +82,8 @@ const LoginModal = ({ onClose, onSuccess }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
-              className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-3 py-2.5 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200"
+              autoComplete="email"
               required
             />
           </div>
@@ -97,7 +98,7 @@ const LoginModal = ({ onClose, onSuccess }) => {
           <button
             type="submit"
             disabled={isLoading || !email.trim()}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover focus-ring transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-white rounded-lg hover:bg-primary-hover active:scale-95 focus-ring transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-button"
           >
             {isLoading ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
