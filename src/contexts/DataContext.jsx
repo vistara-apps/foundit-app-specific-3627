@@ -161,6 +161,19 @@ export const DataProvider = ({ children }) => {
     )
   }
 
+  const updateItemStatus = (itemId, status) => {
+    setItems(prev => prev.map(item => 
+      item.id === itemId ? { ...item, status } : item
+    ))
+  }
+
+  const getDaysUntilExpiration = (expiresAt) => {
+    const now = new Date()
+    const expiration = new Date(expiresAt)
+    const diffTime = expiration - now
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  }
+
   const value = {
     items,
     claims,
@@ -172,7 +185,9 @@ export const DataProvider = ({ children }) => {
     addSavedSearch,
     getAvailableItems,
     getPendingClaims,
-    getExpiringItems
+    getExpiringItems,
+    updateItemStatus,
+    getDaysUntilExpiration
   }
 
   return (
