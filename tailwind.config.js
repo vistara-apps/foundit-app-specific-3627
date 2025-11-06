@@ -16,19 +16,26 @@ export default {
         bg: 'hsl(0, 0%, 98%)',
         surface: 'hsl(0, 0%, 100%)',
         'surface-hover': 'hsl(210, 20%, 97%)',
-        border: 'hsl(214, 15%, 88%)',
+        border: 'hsl(214, 15%, 91%)',
         'text-primary': 'hsl(222, 47%, 11%)',
         'text-secondary': 'hsl(215, 14%, 34%)',
         'text-muted': 'hsl(216, 12%, 54%)',
       },
       boxShadow: {
-        'card': '0 2px 8px hsla(222, 47%, 11%, 0.08)',
+        'card': '0 2px 8px hsla(222, 47%, 11%, 0.06)',
         'card-hover': '0 8px 24px hsla(222, 47%, 11%, 0.12)',
-        'modal': '0 20px 60px hsla(222, 47%, 11%, 0.25)',
-        'button': '0 1px 3px hsla(222, 47%, 11%, 0.1)',
+        'modal': '0 25px 50px -12px hsla(222, 47%, 11%, 0.25)',
+        'button': '0 2px 4px hsla(202, 83%, 41%, 0.15)',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.25rem',
+      },
+      backdropBlur: {
+        'sm': '4px',
       }
     },
   },
