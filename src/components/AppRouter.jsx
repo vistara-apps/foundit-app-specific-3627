@@ -3,16 +3,13 @@ import { useAuth } from '../contexts/AuthContext'
 import PublicBrowse from './PublicBrowse'
 import AdminDashboard from './AdminDashboard'
 import LoginScreen from './LoginScreen'
+import { FullPageLoader } from './LoadingSkeleton'
 
 const AppRouter = () => {
   const { user, loading } = useAuth()
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    )
+    return <FullPageLoader message="Loading FoundIt..." />
   }
 
   // Show admin dashboard for authenticated admins
